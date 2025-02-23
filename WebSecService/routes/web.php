@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/multable/{number?}', function ($number = 5) {
+Route::get('/multable/{number?}', function ($number = 7) {
     $j = $number;
  return view('multable', compact('j')); //multable.blade.php
 });
