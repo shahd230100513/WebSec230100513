@@ -1,75 +1,47 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\ProductsController;
+use App\Http\Controllers\Web\UsersController;
+
+Route::get('register', [UsersController::class, 'register'])->name('register');
+Route::post('register', [UsersController::class, 'doRegister'])->name('do_register');
+Route::get('login', [UsersController::class, 'login'])->name('login');
+Route::post('login', [UsersController::class, 'doLogin'])->name('do_login');
+Route::get('logout', [UsersController::class, 'doLogout'])->name('do_logout');
+Route::get('users', [UsersController::class, 'list'])->name('users');
+Route::get('profile/{user?}', [UsersController::class, 'profile'])->name('profile');
+Route::get('users/edit/{user?}', [UsersController::class, 'edit'])->name('users_edit');
+Route::post('users/save/{user}', [UsersController::class, 'save'])->name('users_save');
+Route::get('users/delete/{user}', [UsersController::class, 'delete'])->name('users_delete');
+Route::get('users/edit_password/{user?}', [UsersController::class, 'editPassword'])->name('edit_password');
+Route::post('users/save_password/{user}', [UsersController::class, 'savePassword'])->name('save_password');
+
+
+Route::get('products', [ProductsController::class, 'list'])->name('products_list');
+Route::get('products/edit/{product?}', [ProductsController::class, 'edit'])->name('products_edit');
+Route::post('products/save/{product?}', [ProductsController::class, 'save'])->name('products_save');
+Route::get('products/delete/{product}', [ProductsController::class, 'delete'])->name('products_delete');
+Route::get('products/purchase/{product}', [ProductsController::class, 'purchase'])->name('products_purchase');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('welcome'); //welcome.blade.php
- });
- Route::get('/multable/{number?}', function ($number = null) {
-    $j = $number??2;
-    return view('multable', compact('j')); //multable.blade.php
- });
- Route::get('/even', function () {
-    return view('even'); //even.blade.php
- });
- Route::get('/prime', function () {
-    return view('prime'); //prime.blade.php
- });
-
-
-
-
-
-Route::get('/marketbill', function () {
-    $bill = [
-        'items' => [
-            ['name' => 'Milk', 'quantity' => 2, 'price' => 3.50],
-            ['name' => 'Bread', 'quantity' => 1, 'price' => 2.00],
-            ['name' => 'Eggs', 'quantity' => 12, 'price' => 4.00],
-        ],
-        'total' => 13.00
-    ];
-    return view('marketbill', ['bill' => $bill]);
+Route::get('/multable', function (Request $request) {
+    $j = $request->number??5;
+    $msg = $request->msg;
+    return view('multable', compact("j", "msg"));
 });
 
+Route::get('/even', function () {
+    return view('even');
+});
 
-Route::get('/transcript', function () {
-   $transcript = [
-       'student_name' => 'Shams Edris',
-       'student_id' => '230100513',
-       'courses' => [
-           ['course_code' => 'CET001', 'course_name' => 'Web and Security Technologies', 'credits' => 3, 'grade' => 'A'],
-           ['course_code' => 'CET002', 'course_name' => 'Project II', 'credits' => 4, 'grade' => 'A+'],
-           ['course_code' => 'CET003', 'course_name' => 'Network Operation and Managment', 'credits' => 3, 'grade' => 'A'],
-           ['course_code' => 'CET004', 'course_name' => 'Digital Forensics Fundamental', 'credits' => 3, 'grade' => 'A+'],
-           ['course_code' => 'CET005', 'course_name' => 'Linux and Shell Programming', 'credits' => 3, 'grade' => 'A+'],
-       ],
-       'gpa' => 4.0
-   ];
-   return view('transcript', ['transcript' => $transcript]);
-})->name('transcript');
+Route::get('/prime', function () {
+    return view('prime');
+});
 
-
-Route::get('/calculator', function () {
-   return view('calculator');
-})->name('calculator');
-
-Route::get('/gpa-simulator', function () {
-   $courses = [
-       ['code' => 'CET001', 'title' => 'Web and Security Technologies', 'credits' => 3],
-       ['code' => 'CET002', 'title' => 'Project II', 'credits' => 4],
-       ['code' => 'CET003', 'title' => 'Network Operation and Managment', 'credits' => 3],
-       ['code' => 'CET004', 'title' => 'Digital Forensics Fundamental', 'credits' => 3],
-       ['code' => 'CET005', 'title' => 'Linux and Shell Programming', 'credits' => 3],
-   ];
-   return view('gpa-simulator', ['courses' => $courses]);
-})->name('gpa-simulator');
-
-
-Route::get('/products-list', [ProductController::class, 'list'])->name('products');
+Route::get('/test', function () {
+    return view('test');
+});
