@@ -8,9 +8,10 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
  </head>
  <body>
-    @include('layouts.menu')
-    <div class="container">
-        @yield('content')
-    </div>
- </body>
+   @include('layouts.menu')
+   <div class="container">
+       @yield('content')
+   </div>
+   @yield('scripts')
+</body>
  </html>
